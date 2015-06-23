@@ -19,7 +19,7 @@ before_install:
   # native dependencies
   - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
   - sudo apt-get update -qq
-  - sudo apt-get install -qq gcc-4.8 g++-4.8 gcc-multilib g++-multilib libelf-dev
+  - sudo apt-get install -qq gcc-4.8 g++-4.8 gcc-4.8-multilib g++-4.8-multilib libelf-dev
   - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8 90 --slave /usr/bin/g++ g++ /usr/bin/g++-4.8
   - gcc --version
   - g++ --version
