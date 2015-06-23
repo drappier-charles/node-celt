@@ -5,8 +5,9 @@ version: 0.0.{build}
 # Test against this version of iojs.js
 environment:
   target: "0.28.2"
-  nodejs_version: "2.2.1"
+  nodejs_version: "2.2.1"  
   bin_dir: ./node_modules/evolve-lib-core/bin
+  publish_binary: false
   #s3accessKeyId:
   #  secure: ydADQCiFq/ctjBfAONZyyfE7tGqAs/IYmzBvHBz3uT4=
   #s3secretAccessKey:
@@ -24,11 +25,6 @@ skip_commits:
   message: /^(\.?[0-9]+)+$/g       # Regex for matching version commit messages
   author: evbo
 
-before_install:
-  - set PUBLISH_BINARY=false
-  - for /f "delims=" %%i in ('git describe --tags --always HEAD') do set HEAD=%%i
-  - if "%APPVEYOR_REPO_BRANCH" == "%HEAD%" ( set PUBLISH_BINARY=true )
-
 # Install scripts. (runs after repo cloning)
 install:
   # Get the latest stable version of Node.js or io.js
@@ -37,6 +33,9 @@ install:
   - npm install -g node-gyp
   - npm install -g electron-prebuilt@%target%
   - npm install
+  # Publish builds from tags
+  - for /f "delims=" %%i in ('git describe --tags --always HEAD') do set HEAD=%%i
+  - if "%APPVEYOR_REPO_BRANCH" == "%HEAD%" ( set PUBLISH_BINARY=true )
 
 build_script:
   - bash %bin_dir%/elb --target %target% configure x64 release
