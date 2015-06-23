@@ -5,7 +5,7 @@
     },
     'targets': [
         {
-            'target_name': 'node-celt',
+            'target_name': 'electron-celt',
             'dependencies': [
                 'deps/binding.gyp:libcelt'
             ],
