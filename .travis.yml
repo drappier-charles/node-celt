@@ -43,5 +43,5 @@ after_success:
   - node $bin_dir/elpack --channel $TRAVIS_BRANCH --arch x64 --configuration release
   - node $bin_dir/elpack --channel $TRAVIS_BRANCH --arch x86 --configuration release
   # publish to s3
-  - if [ $PUBLISH_BINARY ]; then node $bin_dir/elpub -c $TRAVIS_BRANCH -b evolve-bin -a x64 -i $s3accessKeyId -k $s3secretAccessKey -C release; fi
-  - if [ $PUBLISH_BINARY ]; then node $bin_dir/elpub -c $TRAVIS_BRANCH -b evolve-bin -a x86 -i $s3accessKeyId -k $s3secretAccessKey -C release; fi
+  - if [[ $PUBLISH_BINARY == true ]]; then node $bin_dir/elpub -c $TRAVIS_BRANCH -b evolve-bin -a x64 -i $s3accessKeyId -k $s3secretAccessKey -C release; fi
+  - if [[ $PUBLISH_BINARY == true ]]; then node $bin_dir/elpub -c $TRAVIS_BRANCH -b evolve-bin -a x86 -i $s3accessKeyId -k $s3secretAccessKey -C release; fi
