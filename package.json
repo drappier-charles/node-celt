@@ -12,7 +12,7 @@
   },
   "main": "./index.js",
   "scripts": {
-    "install": "echo run 'elb configure'"
+    "install": "bash elget"
   },
   "//": "Platform limitations is due to lack of config.h files. See README.md for more information.",
   "os": [
