@@ -12,7 +12,7 @@
   },
   "main": "./index.js",
   "scripts": {
-    "install": "node ./node_modules/electron-updater-tools/bin/elb configure"
+    "install": "bash ./node_modules/electron-updater-tools/bin/elb configure"
   },
   "//": "Platform limitations is due to lack of config.h files. See README.md for more information.",
   "os": [
