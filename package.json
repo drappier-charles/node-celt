@@ -11,6 +11,9 @@
     "url": "http://github.com/evolvelabs/electron-celt.git"
   },
   "main": "./index.js",
+  "scripts": {
+    "install": "echo run 'elb configure'"
+  },
   "//": "Platform limitations is due to lack of config.h files. See README.md for more information.",
   "os": [
     "linux",
