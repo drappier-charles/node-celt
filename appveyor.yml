@@ -36,7 +36,7 @@ install:
   - npm install
   # Publish builds from tags
   - for /f "delims=" %%i in ('git describe --tags --always HEAD') do set HEAD=%%i
-  - if "%APPVEYOR_REPO_BRANCH" == "%HEAD%" ( set PUBLISH_BINARY=true )
+  - if "%APPVEYOR_REPO_BRANCH" == "%HEAD%" set PUBLISH_BINARY=true
 
 build_script:
   - bash %bin_dir%/elb --target %target% configure x64 release
