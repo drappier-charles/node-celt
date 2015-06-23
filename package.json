@@ -12,7 +12,7 @@
   },
   "main": "./index.js",
   "scripts": {
-    "install": "bash elget"
+    "install": "node ./node_modules/electron-updater-tools/bin/elget"
   },
   "//": "Platform limitations is due to lack of config.h files. See README.md for more information.",
   "os": [
@@ -37,13 +37,6 @@
     "nan": "~1.8.4"
   },
   "devDependencies": {
-    "electron-updater-tools": "0.0.2"
-  },
-  "binary": {
-    "module_name": "electron_celt",
-    "module_path": "./lib/binding/{configuration}/{node_abi}-{platform}-{arch}/",
-    "remote_path": "./{module_name}/v{version}/{configuration}/",
-    "package_name": "{module_name}-v{version}-{node_abi}-{platform}-{arch}.tar.gz",
-    "host": "https://evolve.s3-us-west-1.amazonaws.com"
+    "electron-updater-tools": "~0.0.5"
   }
 }

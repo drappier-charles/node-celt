@@ -9,7 +9,7 @@ node_js:
 env:
   global:
     - target: 0.28.2 # electron version
-    - bin_dir: ./node_modules/evolve-lib-core/bin
+    - bin_dir: ./node_modules/electron-updater-tools/bin
     # s3accessKeyId
     - secure: "QExGEfZeuPOHnrS3zYM3PSxd9mvNgA7rTnlZCVivIHTEz+/LYR81V9DCG/DyBzrb/LBh0K8CR2eEuPgaYkbzcmVD/TBKvwxJN2nv2RZ0ml6twISkL5Ms6oLDWZFiWyfDhcbSSFXZvC9cBtrv5cdkmiR6VtXqQ1WRtJxfKFtWxOHJs7BACTOjx6AFARBdRwFeWXkuqZ0aFkzwzD68mChr+cd2zw0xt5LuFIjMEZ8MiJ3HpMmijXNvxSgWch2QfpRGyl7Yp3HAm7bv1fY+oenMHzage/0vY1gUD0F/QmJxUuwvq+NkLBzurbfty8OvIvZxdQyE8SA+sC4Eh7FJCrcIjEfxFcAFgfv8WXeQkTL5Dkv/94sTerIvnaRoAmJWrhgk2+TfmzFoneJ1if0pgesVZFZGTKMQPZqez9i5EFdDwd9b+Jd1wQW8b8CH7ve03SmrvSuHMN25H4EUuE2J4fBbvWuAnFmY57WHDhuyWEtq5cEQVh+c2XbumAEsA0jOUhtphKi/g+3H4GsU53Ez/CWDS8soLf2NNOV0L78QTtvhBOPzxzoiY5DZPFcepWqMtnQwfKiXEeJQUBSIVjXKTdGVzT5ZMxGINMGhhpi+zts5p1aOwEaZozpEpYlf1dFfsXVGXhV43KlGZnsNURlSHiIvSSY/CII5KXbA5DZc2P22/jc="
     # s3secretAccessKey
@@ -21,7 +21,6 @@ before_install:
   - sudo apt-get install -qq gcc-multilib g++-multilib libelf-dev
   # npm dependencies
   - npm install node-gyp -g
-  - npm install electron-updater-tools -g
   - npm install electron-prebuilt@${target} -g
   - npm install
   # Only publish tags
@@ -32,8 +31,8 @@ before_install:
   - if test "${COMMIT_MESSAGE#*'[publish binary]'}" != "$COMMIT_MESSAGE"; then PUBLISH_BINARY=true; fi;
 
 script:
-  - elb configure x64 release --target ${target}
-  - elb configure x86 release --target ${target}
+  - $bin_dir/elb configure x64 release --target ${target}
+  - $bin_dir/elb configure x86 release --target ${target}
 
 after_success:
   # pack the binaries for this platform
