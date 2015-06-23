@@ -22,10 +22,17 @@
     "arm"
   ],
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">=2.3.0"
   },
+  "binaries": [
+    "https://s3.amazonaws.com/evolve-bin/{name}/{name}-{version}-{platform}-{arch}-{configuration}-{channel}.tgz"
+  ],
   "dependencies": {
     "bindings": "~1.2.1",
     "nan": "~1.8.4"
+  },
+  "devDependencies": {
+    "electron-rebuild": "^0.2.2",
+    "electron-updater-tools": "0.0.2"
   }
 }

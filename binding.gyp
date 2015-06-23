@@ -6,6 +6,7 @@
     'targets': [
         {
             'target_name': 'node-celt',
+            '_win_delay_load_hook': 'false',
             'dependencies': [
                 'deps/binding.gyp:libcelt'
             ],
@@ -38,7 +39,8 @@
                 'DYNAMIC_ANNOTATIONS_ENABLED=0'
             ],
             'include_dirs': [
-                "<!(node -e \"require('nan')\")"
+                "<!(node -e \"require('nan')\")",
+                "<!(node -e \"require('electron-updater-tools')\")"
             ],
             'sources': [
                 'src/node-celt.cc',
@@ -48,7 +50,19 @@
                 ],
                 'libraries': [
                 ]
-            }
+            },
+            'target_conditions': [
+                [ 'OS=="win"', {
+                    'msvs_settings': {
+                        'VCLinkerTool': {
+                            'DelayLoadDLLs': [ 'node.dll', 'iojs.exe', 'node.exe' ],
+                            # Don't print a linker warning when no imports from either .exe
+                            # are used.
+                            'AdditionalOptions': [ '/ignore:4199' ],
+                        },
+                    },
+                }],
+            ]
         }
     ]
 }
