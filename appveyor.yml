@@ -30,6 +30,7 @@ install:
   # Get the latest stable version of Node.js or io.js
   - ps: Install-Product node $env:nodejs_version $env:platform
   # install modules
+  - npm install -g is-property # workaround until node 2.3.1
   - npm install -g node-gyp
   - npm install -g electron-prebuilt@%target%
   - npm install
