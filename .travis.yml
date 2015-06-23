@@ -1,0 +1,44 @@
+os:
+  - linux
+  - osx
+
+language: node_js
+node_js:
+  - "iojs-v2.3.0"
+
+env:
+  global:
+    - target: 0.28.2 # electron version
+    - bin_dir: ./node_modules/evolve-lib-core/bin
+    # s3accessKeyId
+    # secure: ...
+    # s3secretAccessKey
+    # secure: ...
+
+before_install:
+  # native dependencies
+  - sudo apt-get update -qq
+  - sudo apt-get install -qq gcc-multilib g++-multilib libelf-dev
+  # npm dependencies
+  - npm install node-gyp -g
+  - npm install electron-updater-tools -g
+  - npm install electron-prebuilt@${target} -g
+  - npm install
+  # Only publish tags
+  - PUBLISH_BINARY=false
+  - if [[ $TRAVIS_BRANCH == `git describe --tags --always HEAD` ]]; then PUBLISH_BINARY=true; fi;
+  # or if we put [publish binary] in the commit message
+  - COMMIT_MESSAGE=$(git show -s --format=%B $TRAVIS_COMMIT | tr -d '\n')
+  - if test "${COMMIT_MESSAGE#*'[publish binary]'}" != "$COMMIT_MESSAGE"; then PUBLISH_BINARY=true; fi;
+
+script:
+  - elb configure x64 release --target ${target}
+  - elb configure x86 release --target ${target}
+
+after_success:
+  # pack the binaries for this platform
+  - node $bin_dir/elpack --channel $TRAVIS_BRANCH --arch x64 --configuration release
+  - node $bin_dir/elpack --channel $TRAVIS_BRANCH --arch x86 --configuration release
+  # publish to s3
+  - if [ $PUBLISH_BINARY ]; then node $bin_dir/elpub -c $TRAVIS_BRANCH -a x64 -i $s3accessKeyId -k $s3secretAccessKey -C release; fi
+  - if [ $PUBLISH_BINARY ]; then node $bin_dir/elpub -c $TRAVIS_BRANCH -a x86 -i $s3accessKeyId -k $s3secretAccessKey -C release; fi
