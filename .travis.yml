@@ -11,9 +11,9 @@ env:
     - target: 0.28.2 # electron version
     - bin_dir: ./node_modules/evolve-lib-core/bin
     # s3accessKeyId
-    # secure: ...
+    - secure: "QExGEfZeuPOHnrS3zYM3PSxd9mvNgA7rTnlZCVivIHTEz+/LYR81V9DCG/DyBzrb/LBh0K8CR2eEuPgaYkbzcmVD/TBKvwxJN2nv2RZ0ml6twISkL5Ms6oLDWZFiWyfDhcbSSFXZvC9cBtrv5cdkmiR6VtXqQ1WRtJxfKFtWxOHJs7BACTOjx6AFARBdRwFeWXkuqZ0aFkzwzD68mChr+cd2zw0xt5LuFIjMEZ8MiJ3HpMmijXNvxSgWch2QfpRGyl7Yp3HAm7bv1fY+oenMHzage/0vY1gUD0F/QmJxUuwvq+NkLBzurbfty8OvIvZxdQyE8SA+sC4Eh7FJCrcIjEfxFcAFgfv8WXeQkTL5Dkv/94sTerIvnaRoAmJWrhgk2+TfmzFoneJ1if0pgesVZFZGTKMQPZqez9i5EFdDwd9b+Jd1wQW8b8CH7ve03SmrvSuHMN25H4EUuE2J4fBbvWuAnFmY57WHDhuyWEtq5cEQVh+c2XbumAEsA0jOUhtphKi/g+3H4GsU53Ez/CWDS8soLf2NNOV0L78QTtvhBOPzxzoiY5DZPFcepWqMtnQwfKiXEeJQUBSIVjXKTdGVzT5ZMxGINMGhhpi+zts5p1aOwEaZozpEpYlf1dFfsXVGXhV43KlGZnsNURlSHiIvSSY/CII5KXbA5DZc2P22/jc="
     # s3secretAccessKey
-    # secure: ...
+    - secure: "RcpdPpF6sR6xEqYFkYSbwq533V+qCeySMBgYCEsmWsntuaBpkErU/uSoD6IG1exflQ34fZMAPUPobxIJjp94be6oEqOpZSLMSnzEW5wQKipnIkTQ2+I73/soiTwNo4ZjgXuR3y3JaAUdn2ScC9gETzvF2VM+XJ8r4t1O6H3x6Uds4ZtpeXi47X4cQnuU9tKgbz85yJ2IZ6hQxiLItkkhexLvF6XQQJFaWueAt0SJCSWZtWhVTQt/qeOW/HTRr/OwCknkfIUqJ5lRc+rsME0jVwwwShJlEY1/c6g2CqyYZwIot3Oa1wr5NNRuKWfYdGNdIwi5PoiRBTPkvjld/JO+sZuAsrLBQs0AWXGPqgi6UmzyzOhKhbsv93QFasZoGEoqUDo5/C4ibGJoEvN/R9X7Q0E9iheFPDtRogQ1gN5UR2qo5v4TJcYgdx2zcnxWlOo5FSa1SQKHZRCFAscqUwO1qukjDwha9B9JWn676v2nOFN/vX/TSsjjXe5DvVLpTCXnzC/wSIwElLXV1iK3FVepYcuelhTBYgkJKgTRwDYo/fOvVbSlyyJbj0OeuAwyVMZOal5KzapOfa+RDgnoan1oc7aXFhcP71kYnJesQAb5gG0/kb1t7vcsN6mLuKrhuiAoUWjPrb++7xILVF1kCRwSGU35UBocKEL+H13vtI8qCy4="
 
 before_install:
   # native dependencies
