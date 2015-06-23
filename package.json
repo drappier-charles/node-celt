@@ -2,7 +2,7 @@
   "name": "electron-celt",
   "description": "A fork of node-celt, supporting electron builds",
   "version": "0.1.7",
-  "author": "Mikko Rantanen <jubjub@jubjubnest.net>",
+  "author": "Justin Chase <justin@evolvelabs.com>",
   "homepage": "https://github.com/evolvelabs/electron-celt",
   "bugs": "https://github.com/evolvelabs/electron-celt/issues",
   "license": "MIT",
