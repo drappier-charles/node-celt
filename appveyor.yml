@@ -1,0 +1,52 @@
+os: Visual Studio 2015 CTP
+platform: x64
+version: 0.0.{build}
+
+# Test against this version of iojs.js
+environment:
+  target: "0.28.2"
+  nodejs_version: "2.2.1"
+  bin_dir: ./node_modules/evolve-lib-core/bin
+  #s3accessKeyId:
+  #  secure: ydADQCiFq/ctjBfAONZyyfE7tGqAs/IYmzBvHBz3uT4=
+  #s3secretAccessKey:
+  #  secure: nVxm7/8TIW0tHTMgevEPoRYX9loZETTSS+v9JRBihICgbFtCl2IDrz+ToipNphMm
+
+branches:
+  only:
+    - master
+    - dev
+    - beta
+    - release
+
+# Skipping version increment commits 
+skip_commits:
+  message: /^(\.?[0-9]+)+$/g       # Regex for matching version commit messages
+  author: evbo
+
+before_install:
+  - set PUBLISH_BINARY=false
+  - for /f "delims=" %%i in ('git describe --tags --always HEAD') do set HEAD=%%i
+  - if "%APPVEYOR_REPO_BRANCH" == "%HEAD%" ( set PUBLISH_BINARY=true )
+
+# Install scripts. (runs after repo cloning)
+install:
+  # Get the latest stable version of Node.js or io.js
+  - ps: Install-Product node $env:nodejs_version $env:platform
+  # install modules
+  - npm install -g node-gyp
+  - npm install -g electron-prebuilt@%target%
+  - npm install
+
+build_script:
+  - bash %bin_dir%/elb --target %target% configure x64 release
+  - bash %bin_dir%/elb --target %target% configure x86 release
+
+after_build:
+  - node %bin_dir%/elpack --channel %APPVEYOR_REPO_BRANCH% --arch x64 --configuration release
+  - node %bin_dir%/elpack --channel %APPVEYOR_REPO_BRANCH% --arch x86 --configuration release
+  - npm pack
+
+deploy_script:
+  - if "%PUBLISH_BINARY%" == "true" ( node %bin_dir%/nwpub -c %APPVEYOR_REPO_BRANCH% -a x64 -i %s3accessKeyId% -k %s3secretAccessKey% -C release )
+  - if "%PUBLISH_BINARY%" == "true" ( node %bin_dir%/nwpub -c %APPVEYOR_REPO_BRANCH% -a x86 -i %s3accessKeyId% -k %s3secretAccessKey% -C release )
