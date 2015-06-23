@@ -1,6 +1,7 @@
 *.swp
 *.log
 *.tgz
+.amazon
 /build
 /deps/build
 node_modules/
