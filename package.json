@@ -37,6 +37,6 @@
     "nan": "~1.8.4"
   },
   "devDependencies": {
-    "electron-updater-tools": "~0.0.6"
+    "electron-updater-tools": "~0.0.x"
   }
 }
