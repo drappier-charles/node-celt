@@ -12,7 +12,7 @@
   },
   "main": "./index.js",
   "scripts": {
-    "install": "echo 0"
+    "install": "bash ./node_modules/electron-updater-tools/bin/elinst"
   },
   "//": "Platform limitations is due to lack of config.h files. See README.md for more information.",
   "os": [
@@ -27,7 +27,7 @@
     "ia86"
   ],
   "engines": {
-    "node": ">=2.3.0"
+    "node": ">=2.2.1"
   },
   "binaries": [
     "https://s3.amazonaws.com/evolve-bin/{name}/{name}-{version}-{platform}-{arch}-{configuration}-{channel}.tgz"
@@ -37,6 +37,6 @@
     "nan": "~1.8.4"
   },
   "devDependencies": {
-    "electron-updater-tools": "~0.0.5"
+    "electron-updater-tools": "~0.0.6"
   }
 }
