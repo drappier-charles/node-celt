@@ -32,3 +32,11 @@ copying the resulting config.h to deps/config/celt-0.7.1/<os>/<arch>.
 
 Use the following flags: --enable-static --disable-shared --with-pic
 
+Fork Notes
+----------
+This fork adds electron build support, compatible with [electron-updater](https://github.com/evolvelabs/electron-updater).
+
+Binaries available for various platforms on s3, e.g.:
+https://s3.amazonaws.com/evolve-bin/electron-celt/electron-celt-0.1.7-win32-x64-release-master.tgz
+
+See the `package.json` for how the url is composed.
