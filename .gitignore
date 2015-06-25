@@ -1,6 +1,7 @@
 *.swp
 *.log
 *.tgz
+*.log
 .amazon
 /build
 /deps/build
