@@ -10,7 +10,7 @@ env:
     - PATH: ./node_modules/electron-updater-tools/bin:$PATH
     - PUBLISH_BINARY: false
     - NODE_VERSION: iojs
-    - ELECTRON_VERSION: 0.28.2
+    - ELECTRON_VERSION: 0.30.2
     # Other available variables:
     # s3accessKeyId
     # s3secretAccessKey
