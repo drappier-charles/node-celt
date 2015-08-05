@@ -42,13 +42,19 @@ install:
   - npm install
 
 script:
-  - elb configure release x64
-  - if [ $TRAVIS_OS_NAME != osx ]; then elb configure release ia32; fi
+  - elb configure x64 release
+  - elb configure x64 debug
+  - if [ $TRAVIS_OS_NAME != osx ]; then elb configure ia32 release; fi
+  - if [ $TRAVIS_OS_NAME != osx ]; then elb configure ia32 debug; fi
 
 after_success:
   # pack the binaries for this platform
-  - elpack --configuration release --arch x64
-  - if [ $TRAVIS_OS_NAME != osx ]; then elpack --configuration release --arch ia32; fi
+  - elpack --arch x64 --configuration release 
+  - elpack --arch x64 --configuration debug
+  - if [ $TRAVIS_OS_NAME != osx ]; then elpack --arch ia32 --configuration release; fi
+  - if [ $TRAVIS_OS_NAME != osx ]; then elpack --arch ia32 --configuration debug; fi
   # publish to s3
-  - if [ $PUBLISH_BINARY == true ]; then elpub -b evolve-bin -i $s3accessKeyId -k $s3secretAccessKey -C release -a x64; fi
-  - if [ $PUBLISH_BINARY == true ] && [ $TRAVIS_OS_NAME != osx ]; then elpub -b evolve-bin -i $s3accessKeyId -k $s3secretAccessKey -C release -a ia32; fi 
+  - if [ $PUBLISH_BINARY == true ]; then elpub -b evolve-bin -i $s3accessKeyId -k $s3secretAccessKey -a x64 -C release; fi
+  - if [ $PUBLISH_BINARY == true ]; then elpub -b evolve-bin -i $s3accessKeyId -k $s3secretAccessKey -a x64 -C debug; fi
+  - if [ $PUBLISH_BINARY == true ] && [ $TRAVIS_OS_NAME != osx ]; then elpub -b evolve-bin -i $s3accessKeyId -k $s3secretAccessKey -a ia32 -C release; fi 
+  - if [ $PUBLISH_BINARY == true ] && [ $TRAVIS_OS_NAME != osx ]; then elpub -b evolve-bin -i $s3accessKeyId -k $s3secretAccessKey -a ia32 -C debug; fi 
