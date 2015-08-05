@@ -20,8 +20,6 @@ before_install:
   - source /tmp/.nvm/nvm.sh
   - nvm install $NODE_VERSION
   - nvm use $NODE_VERSION
-  - nvm -v
-  - node -v
   # native dependencies
   - if [ $TRAVIS_OS_NAME == "linux" ]; then
       sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y;
