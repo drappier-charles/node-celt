@@ -37,24 +37,24 @@ before_install:
 install:
   - nvm install iojs
   # npm dependencies
-  - npm install node-gyp -g
-  - npm install electron-prebuilt -g
+  - npm install -g node-gyp
+  - npm install -g electron-prebuilt@${ELECTRON_VERSION}
   - npm install
 
 script:
-  - elb configure x64 release
-  - elb configure x64 debug
-  - if [ $TRAVIS_OS_NAME != osx ]; then elb configure ia32 release; fi
-  - if [ $TRAVIS_OS_NAME != osx ]; then elb configure ia32 debug; fi
+  - elb --target ${ELECTRON_VERSION} configure x64 release
+  - elb --target ${ELECTRON_VERSION} configure x64 debug
+  - if [ $TRAVIS_OS_NAME != osx ]; then elb --target ${ELECTRON_VERSION} configure ia32 release; fi
+  - if [ $TRAVIS_OS_NAME != osx ]; then elb --target ${ELECTRON_VERSION} configure ia32 debug; fi
 
 after_success:
   # pack the binaries for this platform
-  - elpack --arch x64 --configuration release 
+  - elpack --arch x64 --configuration release
   - elpack --arch x64 --configuration debug
   - if [ $TRAVIS_OS_NAME != osx ]; then elpack --arch ia32 --configuration release; fi
   - if [ $TRAVIS_OS_NAME != osx ]; then elpack --arch ia32 --configuration debug; fi
   # publish to s3
   - if [ $PUBLISH_BINARY == true ]; then elpub -b evolve-bin -i $s3accessKeyId -k $s3secretAccessKey -a x64 -C release; fi
   - if [ $PUBLISH_BINARY == true ]; then elpub -b evolve-bin -i $s3accessKeyId -k $s3secretAccessKey -a x64 -C debug; fi
-  - if [ $PUBLISH_BINARY == true ] && [ $TRAVIS_OS_NAME != osx ]; then elpub -b evolve-bin -i $s3accessKeyId -k $s3secretAccessKey -a ia32 -C release; fi 
-  - if [ $PUBLISH_BINARY == true ] && [ $TRAVIS_OS_NAME != osx ]; then elpub -b evolve-bin -i $s3accessKeyId -k $s3secretAccessKey -a ia32 -C debug; fi 
+  - if [ $PUBLISH_BINARY == true ] && [ $TRAVIS_OS_NAME != osx ]; then elpub -b evolve-bin -i $s3accessKeyId -k $s3secretAccessKey -a ia32 -C release; fi
+  - if [ $PUBLISH_BINARY == true ] && [ $TRAVIS_OS_NAME != osx ]; then elpub -b evolve-bin -i $s3accessKeyId -k $s3secretAccessKey -a ia32 -C debug; fi

@@ -3,7 +3,7 @@ platform: x64
 version: "{build}"
 
 environment:
-  target: "0.28.2"
+  target: "0.30.2"
   nodejs_version: "2.2.1"
   publish_binary: false
   bin_dir: ./node_modules/electron-updater-tools/bin
@@ -21,9 +21,6 @@ install:
   # Or if APPVEYOR_REPO_COMMIT_MESSAGE contains [publish binary]
   - ps: if($env:APPVEYOR_REPO_TAG) { $env:PUBLISH_BINARY = 'true' }
   - ps: if($env:APPVEYOR_REPO_COMMIT_MESSAGE.contains('[publish binary]')) { $env:PUBLISH_BINARY = 'true' }
-
-test_script:
-  - npm test
 
 build_script:
   - bash %bin_dir%/elb --target %target% configure x64 release
