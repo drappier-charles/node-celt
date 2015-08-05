@@ -3,7 +3,6 @@ platform: x64
 version: "{build}"
 
 environment:
-  target: "0.30.2"
   nodejs_version: "2.2.1"
   publish_binary: false
   bin_dir: ./node_modules/electron-updater-tools/bin
@@ -15,7 +14,6 @@ install:
   - npm install -g is-property # workaround until node 2.3.1
   - npm install -g process-nextick-args # workaround maxpath issues in windows
   - npm install -g node-gyp
-  - npm install -g electron-prebuilt@%target%
   - npm install
   # Publish builds when tagged
   # Or if APPVEYOR_REPO_COMMIT_MESSAGE contains [publish binary]
@@ -23,10 +21,10 @@ install:
   - ps: if($env:APPVEYOR_REPO_COMMIT_MESSAGE.contains('[publish binary]')) { $env:PUBLISH_BINARY = 'true' }
 
 build_script:
-  - bash %bin_dir%/elb --target %target% configure x64 release
-  - bash %bin_dir%/elb --target %target% configure x64 debug
-  - bash %bin_dir%/elb --target %target% configure ia32 release
-  - bash %bin_dir%/elb --target %target% configure ia32 debug
+  - bash %bin_dir%/elb configure x64 release
+  - bash %bin_dir%/elb configure x64 debug
+  - bash %bin_dir%/elb configure ia32 release
+  - bash %bin_dir%/elb configure ia32 debug
 
 after_build:
   - node %bin_dir%/elpack --arch x64 --configuration release
