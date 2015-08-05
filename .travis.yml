@@ -9,7 +9,7 @@ env:
   global:
     - PATH: ./node_modules/electron-updater-tools/bin:$PATH
     - PUBLISH_BINARY: false
-    - NODE_VERSION: iojs
+    - NODE_VERSION: 2.5.3
     # Other available variables:
     # s3accessKeyId
     # s3secretAccessKey
@@ -20,6 +20,8 @@ before_install:
   - source /tmp/.nvm/nvm.sh
   - nvm install $NODE_VERSION
   - nvm use $NODE_VERSION
+  - nvm -v
+  - node -v
   # native dependencies
   - if [ $TRAVIS_OS_NAME == "linux" ]; then
       sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y;
@@ -34,8 +36,6 @@ before_install:
   - if test "${COMMIT_MESSAGE#*'[publish binary]'}" != "$COMMIT_MESSAGE"; then PUBLISH_BINARY=true; fi;
 
 install:
-  - nvm install iojs
-  # npm dependencies
   - npm install -g node-gyp
   - npm install
 
