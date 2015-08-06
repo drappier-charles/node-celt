@@ -1,7 +1,7 @@
 {
   "name": "electron-celt",
   "description": "A fork of node-celt, supporting electron builds",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "author": "Justin Chase <justin@evolvelabs.com>",
   "homepage": "https://github.com/evolvelabs/electron-celt",
   "bugs": "https://github.com/evolvelabs/electron-celt/issues",

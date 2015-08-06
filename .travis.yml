@@ -1,9 +1,20 @@
 git:
   depth: 10
 
-os:
-  - linux
-  - osx
+matrix:
+  include:
+    - os: linux
+      env: CONFIGURATION=release ARCH=x64
+    - os: linux
+      env: CONFIGURATION=release ARCH=ia32
+    - os: linux
+      env: CONFIGURATION=debug   ARCH=x64
+    - os: linux
+      env: CONFIGURATION=debug   ARCH=ia32
+    - os: osx
+      env: CONFIGURATION=release ARCH=x64
+    - os: osx
+      env: CONFIGURATION=debug   ARCH=x64
 
 env:
   global:
@@ -34,23 +45,17 @@ before_install:
   - if test "${COMMIT_MESSAGE#*'[publish binary]'}" != "$COMMIT_MESSAGE"; then PUBLISH_BINARY=true; fi;
 
 install:
-  - npm install -g node-gyp
+  # npm dependencies
+  - npm install node-gyp -g
   - npm install
 
 script:
-  - elb configure x64 release
-  - elb configure x64 debug
-  - if [ $TRAVIS_OS_NAME != osx ]; then elb configure ia32 release; fi
-  - if [ $TRAVIS_OS_NAME != osx ]; then elb configure ia32 debug; fi
+  - elb configure $ARCH $CONFIGURATION
 
 after_success:
   # pack the binaries for this platform
-  - elpack --arch x64 --configuration release
-  - elpack --arch x64 --configuration debug
-  - if [ $TRAVIS_OS_NAME != osx ]; then elpack --arch ia32 --configuration release; fi
-  - if [ $TRAVIS_OS_NAME != osx ]; then elpack --arch ia32 --configuration debug; fi
+  - elpack --arch $ARCH --configuration $CONFIGURATION
   # publish to s3
-  - if [ $PUBLISH_BINARY == true ]; then elpub -b evolve-bin -i $s3accessKeyId -k $s3secretAccessKey -a x64 -C release; fi
-  - if [ $PUBLISH_BINARY == true ]; then elpub -b evolve-bin -i $s3accessKeyId -k $s3secretAccessKey -a x64 -C debug; fi
-  - if [ $PUBLISH_BINARY == true ] && [ $TRAVIS_OS_NAME != osx ]; then elpub -b evolve-bin -i $s3accessKeyId -k $s3secretAccessKey -a ia32 -C release; fi
-  - if [ $PUBLISH_BINARY == true ] && [ $TRAVIS_OS_NAME != osx ]; then elpub -b evolve-bin -i $s3accessKeyId -k $s3secretAccessKey -a ia32 -C debug; fi
+  - if [ $PUBLISH_BINARY == true ]; then 
+      elpub -b evolve-bin -i $s3accessKeyId -k $s3secretAccessKey -a $ARCH -C $CONFIGURATION; 
+    fi
