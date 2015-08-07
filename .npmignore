@@ -2,6 +2,9 @@
 *.jshintrc
 *.yml
 *.gyp
+*.pcm
+*.celt
+
 .amazon
 .gitmodules
 .npmignore
