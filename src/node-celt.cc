@@ -74,7 +74,7 @@ class CeltEncoder : public ObjectWrap {
 			size_t compressedLength = (size_t)celt_encode( self->encoder, pcm, NULL, &(self->compressedBuffer[0]), compressedSize );
 
 			// Create a new result buffer.
-			auto actualBuffer = Nan::NewBuffer(reinterpret_cast<char*>(self->compressedBuffer), compressedLength ).ToLocalChecked();
+			auto actualBuffer = Nan::CopyBuffer(reinterpret_cast<char*>(self->compressedBuffer), compressedLength ).ToLocalChecked();
 
 
 			info.GetReturnValue().Set( actualBuffer );
@@ -100,7 +100,7 @@ class CeltEncoder : public ObjectWrap {
 
 			// Create a new result buffer.
 			int dataSize = self->frameSize * 2;
-			Local<Object> actualBuffer = Nan::NewBuffer(reinterpret_cast<char*>(self->frameBuffer), dataSize).ToLocalChecked();
+			Local<Object> actualBuffer = Nan::CopyBuffer(reinterpret_cast<char*>(self->frameBuffer), dataSize).ToLocalChecked();
 
 
 			info.GetReturnValue().Set( actualBuffer );
