@@ -3,6 +3,7 @@
 #include <node.h>
 #include <node_buffer.h>
 #include <node_object_wrap.h>
+#include <delay_load_hook.h>
 #include "../deps/celt-0.7.1/libcelt/celt.h"
 #include "common.h"
 #include <nan.h>
@@ -73,7 +74,7 @@ class CeltEncoder : public ObjectWrap {
 			size_t compressedLength = (size_t)celt_encode( self->encoder, pcm, NULL, &(self->compressedBuffer[0]), compressedSize );
 
 			// Create a new result buffer.
-			Local<Object> actualBuffer = Nan::CopyBuffer(reinterpret_cast<char*>(self->compressedBuffer), compressedLength ).ToLocalChecked();
+			auto actualBuffer = Nan::CopyBuffer(reinterpret_cast<char*>(self->compressedBuffer), compressedLength ).ToLocalChecked();
 
 
 			info.GetReturnValue().Set( actualBuffer );
@@ -135,9 +136,14 @@ class CeltEncoder : public ObjectWrap {
 			tpl->SetClassName(Nan::New<String>("CeltEncoder").ToLocalChecked());
 			tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
-			Nan::SetPrototypeMethod( tpl, "encode", Encode );
-			Nan::SetPrototypeMethod( tpl, "decode", Decode );
-			Nan::SetPrototypeMethod( tpl, "setBitrate", SetBitrate );
+			tpl->PrototypeTemplate()->Set( Nan::New<String>("encode").ToLocalChecked(),
+				Nan::New<FunctionTemplate>( Encode )->GetFunction() );
+
+			tpl->PrototypeTemplate()->Set( Nan::New<String>("decode").ToLocalChecked(),
+				Nan::New<FunctionTemplate>( Decode )->GetFunction() );
+
+			tpl->PrototypeTemplate()->Set( Nan::New<String>("setBitrate").ToLocalChecked(),
+				Nan::New<FunctionTemplate>( SetBitrate )->GetFunction() );
 
 			//v8::Persistent<v8::FunctionTemplate> constructor;
 			//NanAssignPersistent(constructor, tpl);

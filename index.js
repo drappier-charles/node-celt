@@ -1,5 +1,5 @@
 
-var binding = require('bindings')('node-celt');
+var binding = require('bindings')(`electron-celt-${process.arch}`);
 
 exports.CeltEncoder = binding.CeltEncoder;
 
