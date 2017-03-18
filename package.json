@@ -9,10 +9,6 @@
   "homepage": "https://github.com/evolvelabs/electron-celt",
   "bugs": "https://github.com/evolvelabs/electron-celt/issues",
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "http://github.com/evolvelabs/electron-celt.git"
-  },
   "main": "./index.js",
   "scripts": {
   },
@@ -25,21 +21,14 @@
   ],
   "cpu": [
     "x64",
-    "arm",
-    "ia86"
+    "arm"
   ],
   "engines": {
-    "node": ">=3.2.0",
-    "electron": "~0.31.0"
+    "node": ">=0.10.0"
   },
-  "binaries": [
-    "https://s3.amazonaws.com/evolve-bin/{name}/{name}-{version}-{platform}-{arch}-{configuration}.tgz"
-  ],
   "dependencies": {
     "bindings": "~1.2.1",
     "nan": "~2.4.0",
-    "bindings": "*",
-    "electron-updater-tools": "~0.2.0"
-  },
-  "bundledDependencies": [ "electron-updater-tools" ]
+    "bindings": "*"
+  }
 }
